@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Chats-Kotlin</string>
 
-    <string name=""></string>
+    <string name="default_web_client_id">707830214950-vj4t163p9cluo094bun4vvfq0r995gne.apps.googleusercontent.com</string>
 
     <string name="item_perfil">Perfil</string>
     <string name="item_Usuarios">Usuarios</string>
@@ -22,7 +22,17 @@
     <string name="et_Nombres">Nombres</string>
     <string name="et_R_Password">Repita la contraseña</string>
     <string name="btn_Registrar">Registrar</string>
+
     <string name="btn_Cerrar_Sesion">Cerrar Sesion</string>
+
+    <string name="txt_nombres">Nombre:</string>
+    <string name="tv_nombres"> -- </string>
+    <string name="txt_email">Email:</string>
+    <string name="tv_email"> -- </string>
+    <string name="txt_proveedor">Proveedor:</string>
+    <string name="tv_proveedor"> -- </string>
+    <string name="txt_t_registro">Miemdro desde:</string>
+    <string name="tv_t_registro"> -- </string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

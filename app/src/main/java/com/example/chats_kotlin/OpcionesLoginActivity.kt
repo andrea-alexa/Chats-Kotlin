@@ -16,6 +16,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.FirebaseDatabase
 
 class OpcionesLoginActivity : AppCompatActivity() {
 
@@ -41,6 +42,9 @@ class OpcionesLoginActivity : AppCompatActivity() {
             .requestEmail()
             .build()
 
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+
+
         comprobarSesion()
 
         enableEdgeToEdge()
@@ -63,6 +67,7 @@ class OpcionesLoginActivity : AppCompatActivity() {
 
     private fun iniciarGoogle() {
         val googleSignIntent = mGoogleSignInClient.signInIntent
+        googleSignInActivityResultLauncher.launch(googleSignIntent)
     }
 
     private val googleSignInActivityResultLauncher = registerForActivityResult(
@@ -90,18 +95,49 @@ class OpcionesLoginActivity : AppCompatActivity() {
                 .addOnSuccessListener { authResultado ->
                     //Condicion para comprobar el user
                     if (authResultado.additionalUserInfo!!.isNewUser){
-                        actualizarUsuario()
+                        actualizarInfoUsuario()
                     }
                     else{
                         startActivity(Intent(this, MainActivity::class.java))
                         finishAffinity()
                     }
                 }
-                .addOnFailureListener{e->
+                .addOnFailureListener { e ->
                     Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
+
                 }
         }
 
+    private fun OpcionesLoginActivity.actualizarInfoUsuario() {
+        progressDialog.setMessage("Guardando informacion")
+
+        val uidU = firebaseAuth.uid
+        val nombreU = firebaseAuth.currentUser!!.displayName
+        val emailU = firebaseAuth.currentUser!!.email
+        val tiempoR = Constantes.Constantes.obtenerTiempoDelD()
+
+        //Enviar informacion a Firebase
+        val datosUsuarios = HashMap<String, Any>()
+        datosUsuarios["uid"] = "$uidU"
+        datosUsuarios["nombre"] = "$nombreU"
+        datosUsuarios["email"] = "$emailU"
+        datosUsuarios["tiempoRegistro"] = "$tiempoR"
+        datosUsuarios["proveedor"] = "Google"
+        datosUsuarios["online"] = "online"
+
+        //Guardar la informacion en Firebase
+        val reference = FirebaseDatabase.getInstance().getReference("Usuarios")
+        reference.child(uidU!!)
+            .setValue(datosUsuarios)
+            .addOnCompleteListener {
+                progressDialog.dismiss()
+                startActivity(Intent(applicationContext, MainActivity::class.java))
+            }
+            .addOnFailureListener {
+                    e -> progressDialog.dismiss()
+                Toast.makeText(this, "Fallo la creacion de la cuenta debido a ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
 
     private fun comprobarSesion() {
         if(firebaseAuth.currentUser != null){
