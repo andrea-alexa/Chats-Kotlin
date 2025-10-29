@@ -124,6 +124,7 @@ class OpcionesLoginActivity : AppCompatActivity() {
         datosUsuarios["tiempoRegistro"] = "$tiempoR"
         datosUsuarios["proveedor"] = "Google"
         datosUsuarios["online"] = "online"
+        datosUsuarios["imagen"] = ""
 
         //Guardar la informacion en Firebase
         val reference = FirebaseDatabase.getInstance().getReference("Usuarios")
