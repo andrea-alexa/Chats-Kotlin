@@ -114,7 +114,7 @@ class OpcionesLoginActivity : AppCompatActivity() {
         val uidU = firebaseAuth.uid
         val nombreU = firebaseAuth.currentUser!!.displayName
         val emailU = firebaseAuth.currentUser!!.email
-        val tiempoR = Constantes.Constantes.obtenerTiempoDelD()
+        val tiempoR = Constantes.obtenerTiempoDelD()
 
         //Enviar informacion a Firebase
         val datosUsuarios = HashMap<String, Any>()

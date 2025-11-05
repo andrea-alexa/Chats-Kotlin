@@ -105,7 +105,7 @@ class RegistroEmailActivity : AppCompatActivity() {
         val uidU = firebaseAuth.uid
         val nombreU = nombres
         val emailU = firebaseAuth.currentUser!!.email
-        val tiempoR = Constantes.Constantes.obtenerTiempoDelD()
+        val tiempoR = Constantes.obtenerTiempoDelD()
 
         //Enviar informacion a Firebase
         val datosUsuarios = HashMap<String, Any>()

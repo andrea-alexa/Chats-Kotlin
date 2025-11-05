@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.example.chats_kotlin.Constantes
 import com.example.chats_kotlin.OpcionesLoginActivity
 import com.example.chats_kotlin.R
@@ -71,6 +73,22 @@ class FragmentPerfil : Fragment() {
                     //conversion a fecha
                     val fecha = Constantes.formatoFecha(t_registro.toLong())
 
+                    //setear
+                    binding.tvNombres.text = nombres
+                    binding.tvEmail.text = email
+                    binding.tvProveedor.text = proveedor
+                    binding.tvTRegistro.text = fecha
+
+                    //setear img
+                    try {
+                        Glide.with(mContext)
+                            .load(imagen)
+                            .placeholder(R.drawable.ic_img_perfil)
+                            .into(binding.ivPerfil)
+                    }
+                    catch (e: Exception){
+                        Toast.makeText(mContext, "${e.message}", Toast.LENGTH_SHORT).show()
+                    }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
